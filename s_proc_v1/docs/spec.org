@@ -1,0 +1,15 @@
+#+TITLE: Specification Document 
+#+AUTHOR: Omkar Girish Kamath
+* Modules in the processor
+** RAM  
+** Program Counter
+** Instruction Register
+** Decoder
+** Accumulator
+** ALU
+** MUX
+*** MUX_{IR to ALU}
+*** MUX_{PC to ALU}
+*** MUX_{Address in RAM}
+* Theory
+* Interface 
