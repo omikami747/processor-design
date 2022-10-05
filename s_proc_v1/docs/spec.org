@@ -2,14 +2,25 @@
 #+AUTHOR: Omkar Girish Kamath
 * Modules in the processor
 ** RAM  
+*** Theory
+*** Interface 
 ** Program Counter
+*** Theory
+*** Interface 
 ** Instruction Register
+*** Theory
+*** Interface 
 ** Decoder
+*** Theory
+*** Interface 
 ** Accumulator
+*** Theory
+*** Interface 
 ** ALU
+*** Theory
+*** Interface 
 ** MUX
 *** MUX_{IR to ALU}
 *** MUX_{PC to ALU}
 *** MUX_{Address in RAM}
-* Theory
-* Interface 
+
