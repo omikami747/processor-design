@@ -1,6 +1,6 @@
-#+TITLE: Specification Document 
-#+AUTHOR: Omkar Girish Kamath
-#+LATEX_HEADER:\usepackage{parskip}
+#+TITLE: Specification Document  
+#+AUTHOR: Omkar Girish Kamath  
+#+LATEX_HEADER:\usepackage{parskip}   
 * Instruction set of the processor
 
 In this instruction syntax X=Not used, K=Constant, A=Instruction Address, P=Data Address
@@ -52,10 +52,12 @@ Jump NZ aa : IF Z=0 PC <- AA ELSE PC <- PC + 1
 Jump NC aa : IF C=0 PC <- AA ELSE PC <- PC + 1
 
 Here '->' indicates updated with .
-* Modules in the processor
-** RAM  
+
+The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows *fetch-decode-execute-increment* cycle .   
+* Modules in the processor 
+** RAM
 *** Theory
-*** Interface 
+*** Interface
 ** Program Counter
 *** Theory
 #+CAPTION: 
@@ -236,7 +238,7 @@ output [7:0] q; \\
     |-------------+--------+--------|
 ** ALU
 *** Theory
-*** Interface 
+*** Interface
 ** MUX
 *** MUX_{IR to ALU}
 *** MUX_{PC to ALU}

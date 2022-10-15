@@ -1,4 +1,4 @@
-% Created 2022-10-10 Mon 10:15
+% Created 2022-10-13 Thu 23:01
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,7 +31,7 @@
 \tableofcontents
 
 \section{Instruction set of the processor}
-\label{sec:org0bd2aa9}
+\label{sec:org4f08230}
 
 In this instruction syntax X=Not used, K=Constant, A=Instruction Address, P=Data Address
 
@@ -82,28 +82,30 @@ Jump NZ aa : IF Z=0 PC <- AA ELSE PC <- PC + 1
 Jump NC aa : IF C=0 PC <- AA ELSE PC <- PC + 1
 
 Here '->' indicates updated with .
+
+The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .   
 \section{Modules in the processor}
-\label{sec:orgf06bb92}
+\label{sec:org518769f}
 \subsection{RAM}
-\label{sec:org9ca0800}
+\label{sec:org6b815bf}
 \subsubsection{Theory}
-\label{sec:org2546f1f}
+\label{sec:org3d2a14e}
 \subsubsection{Interface}
-\label{sec:org2329f18}
+\label{sec:org3e7ed94}
 \subsection{Program Counter}
-\label{sec:orgd901d66}
+\label{sec:org1ef0d14}
 \subsubsection{Theory}
-\label{sec:orga91ccac}
+\label{sec:org2f62f45}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/reg8.jpg}
-\caption{\label{fig:org44c72d1}
+\caption{\label{fig:orgdae6e73}
 }
 \end{figure}
 8 bit register used to store the address \textbf{current} instruction being executed.
 It is incremented after every \emph{fetch-decode-execute-increment} cycle .
 \subsubsection{Interface}
-\label{sec:orgbe15afa}
+\label{sec:org9c8ca71}
 module pc (\\
 d,\\
 clk,\\
@@ -132,15 +134,15 @@ q & output & 8 bits\\
 \end{tabular}
 \end{center}
 \subsection{Instruction Register}
-\label{sec:org6eebe5e}
+\label{sec:org9adb4ce}
 \subsubsection{Theory}
-\label{sec:orga413288}
+\label{sec:org6ef4b12}
 Instruction Register (IR) : \textbf{16} bit register, updated at the end of the fetch phase with the instruction to be processed (decoded and executed).
 \begin{center}
 \includegraphics[width=.9\linewidth]{./images/reg16.jpg}
 \end{center}
 \subsubsection{Interface}
-\label{sec:org5a0166f}
+\label{sec:orgefd689f}
 module ir (\\
     d,\\
     clk,\\
@@ -169,9 +171,9 @@ q & output & 16 bits\\
 \end{center}
 
 \subsection{Decoder}
-\label{sec:orged2420a}
+\label{sec:orgbe19e98}
 \subsubsection{Theory}
-\label{sec:org9283c64}
+\label{sec:org9b46a3a}
 It generates the sequence of control signals needed to perform the functions defined by each instruction by considering the current state of the processor and the current instruction . These are contained within the decoder or control-logic block , the circuit diagram symbol for this component is shown.
 \begin{center}
 \includegraphics[width=.9\linewidth]{./images/decoder_sym.jpg}
@@ -207,7 +209,7 @@ Most of this control logic is quite intuitive, you simply combine the one-hot ou
 
 
 \subsubsection{Interface}
-\label{sec:org4082eaf}
+\label{sec:orgaeea059}
 \begin{center}
 \begin{tabular}{lrll}
 Name & size & function & type\\
@@ -269,18 +271,18 @@ CE : input, clock enable, normally set to 1, if set to 0 processor will HALT
 CLR : input, system reset, if pulsed high system will be reset 
 
 \subsection{Accumulator}
-\label{sec:org7d58a19}
+\label{sec:org913882c}
 \subsubsection{Theory}
-\label{sec:orge27c893}
+\label{sec:orgd1baab1}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/reg8.jpg}
-\caption{\label{fig:org474119b}
+\caption{\label{fig:orgb0c3f8d}
 }
 \end{figure}
 Accumulator (ACC) : \emph{8} bit register, a general purpose data register, providing data (operand) to be processed by the ALU and used to \textbf{store} any result produced. Note, we can only store one 8 bit value at a time on the processor, other data values will need to be buffered in external memory.
 \subsubsection{Interface}
-\label{sec:org4e53537}
+\label{sec:org8fe1aca}
 module pc (\\
 d,\\
 clk,\\
@@ -309,17 +311,17 @@ q & output & 8 bits\\
 \end{tabular}
 \end{center}
 \subsection{ALU}
-\label{sec:org7114248}
+\label{sec:org7d3fdea}
 \subsubsection{Theory}
-\label{sec:orgf20ee77}
+\label{sec:org464ea79}
 \subsubsection{Interface}
-\label{sec:org09ca388}
+\label{sec:orgc160bee}
 \subsection{MUX}
-\label{sec:orge647b52}
+\label{sec:orgd28a3ce}
 \subsubsection{MUX\(_{\text{IR to ALU}}\)}
-\label{sec:org7a42dc1}
+\label{sec:orga45df31}
 \subsubsection{MUX\(_{\text{PC to ALU}}\)}
-\label{sec:orga5b05aa}
+\label{sec:orgc19331c}
 \subsubsection{MUX\(_{\text{Address in RAM}}\)}
-\label{sec:org5d38cb4}
+\label{sec:org5295fac}
 \end{document}
