@@ -1,0 +1,81 @@
+% Created 2022-10-13 Thu 23:01
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{parskip}
+\author{Omkar Girish Kamath}
+\date{\today}
+\title{Specification Document}
+\hypersetup{
+ pdfauthor={Omkar Girish Kamath},
+ pdftitle={Specification Document},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Instruction set of the processor}
+\label{sec:org4f08230}
+
+In this instruction syntax X=Not used, K=Constant, A=Instruction Address, P=Data Address
+
+\begin{longtable}{|l|l|l|}
+\caption{Instruction Set of the Simple CPU}\\ \hline
+{\bf Opcode} & {\bf Instruction} & {\bf RTL} \\ 
+\endfirsthead
+\caption[]{(\em continued from previous page)}\\
+\hline
+{\bf Opcode} & {\bf Instruction} & {\bf RTL} \\ \hline 
+\endhead
+\multicolumn{3}{|r|}{{\em continued on next page}} \\ \hline
+\endfoot
+\endlastfoot
+\hline \hline
+\texttt{Load ACC kk} &  \texttt{0000 XXXX KKKKKKKK} & \texttt{ACC <- KK} \\ \hline
+
+\texttt{Add ACC kk} &  \texttt{0100 XXXX KKKKKKKK} & \texttt{ACC <- ACC + KK} \\ \hline
+
+\texttt{And ACC kk} &  \texttt{0001 XXXX KKKKKKKK} &  \texttt{ACC <- ACC \& KK} \\ \hline
+
+\texttt{Sub ACC kk} &  \texttt{0110 XXXX KKKKKKKK} & \texttt{ACC <- ACC - KK} \\ \hline
+
+\texttt{Input ACC pp} &  \texttt{1010 XXXX PPPPPPPP} & \texttt{ACC <- M[PP]} \\ \hline
+
+\texttt{Output ACC pp} &  \texttt{1110 XXXX PPPPPPPP} & \texttt{M[PP] <- ACC} \\ \hline
+
+\texttt{Jump U aa} &  \texttt{1000 XXXX AAAAAAAA} & \texttt{PC <- AA} \\ \hline
+
+\texttt{Jump Z aa} &  \texttt{1001 00XX AAAAAAAA} & \texttt{IF Z=1 PC <- AA ELSE PC <- PC + 1} \\ \hline
+
+\texttt{Jump C aa} &  \texttt{1001 10XX AAAAAAAA} & \texttt{IF C=1 PC <- AA ELSE PC <- PC + 1} \\ \hline
+
+\texttt{Jump NZ aa} &  \texttt{1001 01XX AAAAAAAA} & \texttt{IF Z=0 PC <- AA ELSE PC <- PC + 1} \\ \hline
+
+\texttt{Jump NC aa} &  \texttt{1001 11XX AAAAAAAA} & \texttt{IF C=0 PC <- AA ELSE PC <- PC + 1}\\ \hline
+
+\end{longtable}
+
+
+Here '->' indicates updated with .
+
+The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .   
+
+\section{Input Output signals}
+\section{RAM specs}
+\end{document}
