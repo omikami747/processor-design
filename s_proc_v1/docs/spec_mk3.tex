@@ -16,6 +16,7 @@
 \usepackage{capt-of}
 \usepackage{hyperref}
 \usepackage{parskip}
+\usepackage{tabularx}
 \author{Omkar Girish Kamath}
 \date{\today}
 \title{Specification Document}
@@ -83,7 +84,7 @@ The processor has an extra cycle to save on hardware which would have been requi
   \begin{center}
     \caption{I/O interface of the processor}  
     \vspace*{5mm}
-    \begin{tabular}{||l|l|l||l|l||}
+    \begin{tabularx}{\linewidth}{||l|l|l||l|X||}
       \hline
           {\bf Signals} & { \bf Type } & {\bf Size} & {\bf Active} &{\bf Description}   \\ \hline
             clk          & input  & 1 bit   & -     &  square wave used to maintain synchronousity in the device \\ \hline
@@ -93,7 +94,7 @@ The processor has an extra cycle to save on hardware which would have been requi
             [7:0] adrs   & output & 8 bits  & -     &  the address of the required instruction sent to memory \\ \hline
             rw           & output & 1 bit   & -     &  read write control signal sent to memory \\ \hline
             [7:0] d\_out & output & 8 bits  & -     &  output data from the processor \\ \hline
-    \end{tabular}
+    \end{tabularx}
   \end{center}
 \end{table}
 \subsection{Timing Diagrams}
@@ -109,7 +110,7 @@ Address length required is 8 bits.
 \begin{table}[H]
   \begin{center}
     \caption{I/O of the Memory device}
-    \begin{tabular}{||l|l|l|l|l||}
+    \begin{tabularx}{\linewidth}{||l|l|l|l|X||}
       \hline
       {\bf Signals} & { \bf Type } & {\bf Size} & {\bf Active} &{\bf Description}   \\ \hline
             clk            & input  & 1 bit   & -     &  square wave used to maintain synchronousity in the device \\ \hline
@@ -119,7 +120,7 @@ Address length required is 8 bits.
             [7:0] adrs     & input  & 8 bits  & -     &  the address of the required instruction \\ \hline
             rw             & input  & 1 bit   & -     &  read write control signal sent to memory \\ \hline
             [15:0] mem\_out& output & 16 bits & -     &  output data/instruction from the memory \\ \hline
-    \end{tabular}
+    \end{tabularx}
   \end{center}
 \end{table}
 \end{document}
