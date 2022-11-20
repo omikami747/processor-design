@@ -1,0 +1,12 @@
+module ;
+   input reg tstclk;
+   input reg tstce;
+   input     tstclr;
+   output wire tststate;
+
+   seq_gen dut(
+	       .clk(tstclk),
+	       .ce(tstce),
+	       .clr(tstclr),
+	       .state(tststate)
+	       )

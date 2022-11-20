@@ -1,0 +1,28 @@
+module pc(
+	  clk,
+	  rst,
+	  c_e,
+	  adrs_in,
+	  adrs_out
+	  );
+   input wire clk;
+   input wire rst;
+   input wire c_e;
+   input wire [7:0] adrs_in;
+   output reg [7:0] adrs_out;
+   
+   always @(posedge clk or negedge rst or negedge c_e)
+     begin
+	if(c_e === 1b'0 )
+	  begin
+	  end
+	else if(rst === 1'b0)
+	  begin
+	     adrs_out <= 8'b00000000;
+	  end
+	else
+	  begin
+	  end
+     end
+   
+endmodule
