@@ -17,6 +17,7 @@
 \usepackage{hyperref}
 \usepackage{parskip}
 \usepackage{tabularx}
+\usepackage{float}
 \author{Omkar Girish Kamath}
 \date{\today}
 \title{Specification Document}
@@ -33,6 +34,12 @@
 \tableofcontents
 \vspace*{70mm}
 \section{Processor}
+\begin{figure}
+  \begin{center}
+    \caption{}
+    \includegraphics[scale=0.5]{top_view.jpg}
+  \end{center}
+\end{figure}
 \subsection{Instruction Set}
 \label{sec:org4f08230}
 
@@ -77,8 +84,9 @@ In this instruction syntax X=Not used, K=Constant, A=Instruction Address, P=Data
 
 Here '->' indicates updated with .
 
-The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .   
-\vspace*{40mm}
+The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .
+THe processor uses a 1 GHz frequency clock.
+\vspace*{20mm}
 \subsection{Input Output Interface}
 \begin{table}[H]
   \begin{center}
@@ -88,7 +96,6 @@ The processor has an extra cycle to save on hardware which would have been requi
       \hline
           {\bf Signals} & { \bf Type } & {\bf Size} & {\bf Active} &{\bf Description}   \\ \hline
             clk          & input  & 1 bit   & -     &  square wave used to maintain synchronousity in the device \\ \hline
-            c\_e         & input  & 1 bit   & High  &  enables the chip for input data  \\ \hline
             rst          & input  & 1 bit   & Low   &  resets the chip to a pre decided state \\ \hline
             [15:0] d\_in & input  & 16 bits & -     &  the instruction sent from memory \\ \hline
             [7:0] adrs   & output & 8 bits  & -     &  the address of the required instruction sent to memory \\ \hline
@@ -105,7 +112,7 @@ The processor has an extra cycle to save on hardware which would have been requi
 \section{Memory}
 \subsection{Description}
 {\bf Size of RAM -> 4 Kilobytes} \\
-RAM used is DDR5 Synchronous Dynamic RAM . \\
+RAM used is Volatile BJT type Synchronous Static RAM . \\
 Instruction length is \textit{16 bit} , maximum number of instructions  and data than can be stored is {\bf 256} (address 0 to 255).
 Address length required is 8 bits.
 \subsection{I/O of the  Memory device}
@@ -117,7 +124,6 @@ Address length required is 8 bits.
       \hline
       {\bf Signals} & { \bf Type } & {\bf Size} & {\bf Active} &{\bf Description}   \\ \hline
             clk            & input  & 1 bit   & -     &  square wave used to maintain synchronousity in the device \\ \hline
-            c\_e           & input  & 1 bit   & High  &  enables the memory functioning  \\ \hline
             rst            & input  & 1 bit   & Low   &  resets the memory to a pre decided state \\ \hline
             [15:0] mem\_in & input  & 16 bits & -     &  the data sent by chip \\ \hline
             [7:0] adrs     & input  & 8 bits  & -     &  the address of the required instruction \\ \hline
