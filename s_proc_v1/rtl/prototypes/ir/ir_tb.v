@@ -1,14 +1,12 @@
 module ir_tb;
    reg tstclk;
    reg tstrst;
-   reg tstc_e;
    reg [15:0] tstd_in;
    wire [15:0] tstd_out;
 
    ir dut(
 	  .clk(tstclk),
 	  .rst(tstrst),
-	  .c_e(tstc_e),
 	  .d_in(tstd_in),
 	  .d_out(tstd_out)
 	  );
@@ -23,7 +21,7 @@ module ir_tb;
      begin
 	$dumpvars;
 	tstd_in <= 0000000010110001;
-	tstc_e <= 1'b1;
+	
 	
         @(posedge tstclk)
 	  begin
@@ -34,13 +32,13 @@ module ir_tb;
 	@(posedge tstclk)
 	  begin
 	     tstd_in <= 0001000100110001;
-	     tstc_e <= 1'b0;
+	     
 	  end
 	
        
 	@(posedge tstclk)
 	  begin
-	     tstc_e <= 1'b1;
+	     
 	     tstd_in <= 0000000010110001;
 	  end
 	
