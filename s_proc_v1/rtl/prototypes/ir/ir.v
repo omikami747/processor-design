@@ -10,19 +10,31 @@ module ir(
           clk,
           rst,
           d_in,
-          d_out
+          d_out,
+	  en_ir
           );
    
    input wire rst;
    input wire clk;
+   input wire en_ir;
    
    input wire [15:0] d_in;
    output reg [15:0] d_out;
    always @(posedge clk or negedge rst)
      begin
+	if(rst === 1'b0)
 	  begin
-	     d_out <= d_in;
+	     d_out <= 16'b0000000000000000;
 	  end
+	else
+	  if(en_ir === 1'b1)
+	    begin
+	       d_out <= d_in;
+	    end
+	  else
+	    begin
+	    end
+	
      end
    
    
