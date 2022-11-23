@@ -1,34 +1,33 @@
 module pc(
 	  clk,
 	  rst,
-	  c_e,
 	  adrs_in,
 	  adrs_out,
 	  en_pc
 	  );
    input wire clk;
    input wire rst;
-   input wire c_e;
    input wire [7:0] adrs_in;
    input wire 	    en_pc;
    
    output  wire [7:0] adrs_out;
-   reg [7:0] 	    temp_adrs;
+   reg [7:0] 	      temp_adrs;
    
    always @(posedge clk or negedge rst)
      begin
-	if(c_e & en_pc === 1'b0)
-	  begin
-	  end
-	else if(rst === 1'b0)
+	if(rst === 1'b0)
 	  begin
 	     temp_adrs <= 8'b00000000;
 	  end
-	else
+	else if(en_pc === 1'b1)
 	  begin
 	     temp_adrs <= adrs_in;
 	  end
-     end // always @ (posedge clk or negedge rst or negedge c_e)
+	else
+	  begin
+	  end
+     end // always @ (posedge clk or negedge rst)
+   
    assign adrs_out = temp_adrs;
    
    
