@@ -17,7 +17,7 @@
 \usepackage{hyperref}
 \usepackage{parskip}
 \usepackage{tabularx}
-\usepackage{float}
+
 \author{Omkar Girish Kamath}
 \date{\today}
 \title{Specification Document}
@@ -32,14 +32,25 @@
 
 \maketitle
 \tableofcontents
-\vspace*{70mm}
+\vspace*{40mm}
 \section{Processor}
-\begin{figure}
+\begin{figure}[!h]
   \begin{center}
     \caption{}
     \includegraphics[scale=0.5]{top_view.jpg}
   \end{center}
 \end{figure}
+\subsection{Major Modules and Their Functions}
+\subsubsection{Program Counter}
+Program Counter (PC) : 8 bit register used to store the address in memory of the current instruction being executed.
+\subsubsection{Instruction Register}
+Instruction Register (IR) : 16 bit register, updated at the end of the fetch phase with the instruction to be processed (decoded and executed).
+\subsubsection{Accumulator }
+8 bit register, a general purpose data register, providing data (operand) to be processed by the ALU and used to store any result produced. Note, we can only store one 8 bit value at a time on the processor, other data values will need to be buffered in external memory.
+\subsubsection{Decoder}
+It decodes the 16 bit instruction recieved , tracks the state of the processor and generates control signals based on the first two.
+\subsubsection{ALU}
+It is the arithmetic and logic unit , which can take in 1 or 2 8bit inputs and perform arithmetic and logic based operations on the operand. 
 \subsection{Instruction Set}
 \label{sec:org4f08230}
 
@@ -86,7 +97,19 @@ Here '->' indicates updated with .
 
 The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .
 THe processor uses a 1 GHz frequency clock.
-\vspace*{20mm}
+
+\subsection{Functioning of the processor}
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[scale=0.5]{steps_1_to_5_tmb.jpg}
+  \end{center}
+\end{figure}
+
+\textbf{ Step 1} : reset, clear line pulsed to reset all flip-flop, initialising all registers to their default values. First fetch phases initiated, ADDR MUX selects PC i.e. the value 0, memory address 0 read, first instruction (INPUT) stored in IR. \\
+\textbf{Step 2} : decode, opcode field decoded, instruction identified as an INPUT instruction, control-logic configures data paths to route absolute address (6) stored in IR to address bus using ADDR MUX. Memory read, data at address 6 accessed (250), data driven onto data-in bus, routed through DATA MUX to input of ACC.\\
+\textbf{Step 3} : execute, ACC updated with accessed data, at the end of this phase ACC = 250. \\
+\textbf{Step 4} : increment, instruction completed, processor needs to increment PC to the address of the next instruction. Control-logic configures ALU to perform increment function, PC routed to ALU, value incremented and stored back into PC. \\ 
+\textbf{Step 5} : fetch, instruction at address 1 read (ADD) and stored in IR. \\
 \subsection{Input Output Interface}
 \begin{table}[H]
   \begin{center}
@@ -107,7 +130,7 @@ THe processor uses a 1 GHz frequency clock.
 \subsection{Timing Diagrams}
 \begin{figure}[!h]
   \caption{Timing Diagrams of the processor}
-  \includegraphics[scale=0.2]{timing_diag.jpg}
+  \includegraphics[scale=0.4]{./images/MergedImages.png}
 \end{figure}
 \section{Memory}
 \subsection{Description}
