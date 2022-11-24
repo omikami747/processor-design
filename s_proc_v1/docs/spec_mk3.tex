@@ -34,23 +34,7 @@
 \tableofcontents
 \vspace*{40mm}
 \section{Processor}
-\begin{figure}[!h]
-  \begin{center}
-    \caption{}
-    \includegraphics[scale=0.5]{top_view.jpg}
-  \end{center}
-\end{figure}
-\subsection{Major Modules and Their Functions}
-\subsubsection{Program Counter}
-Program Counter (PC) : 8 bit register used to store the address in memory of the current instruction being executed.
-\subsubsection{Instruction Register}
-Instruction Register (IR) : 16 bit register, updated at the end of the fetch phase with the instruction to be processed (decoded and executed).
-\subsubsection{Accumulator }
-8 bit register, a general purpose data register, providing data (operand) to be processed by the ALU and used to store any result produced. Note, we can only store one 8 bit value at a time on the processor, other data values will need to be buffered in external memory.
-\subsubsection{Decoder}
-It decodes the 16 bit instruction recieved , tracks the state of the processor and generates control signals based on the first two.
-\subsubsection{ALU}
-It is the arithmetic and logic unit , which can take in 1 or 2 8bit inputs and perform arithmetic and logic based operations on the operand. 
+
 \subsection{Instruction Set}
 \label{sec:org4f08230}
 
@@ -97,6 +81,26 @@ Here '->' indicates updated with .
 
 The processor has an extra cycle to save on hardware which would have been required for incrementing the PC . So the processor follows \textbf{fetch-decode-execute-increment} cycle .
 THe processor uses a 1 GHz frequency clock.
+
+
+\subsection{Major Modules and Their Functions}
+\begin{figure}[H]
+  \begin{center}
+    \caption{}
+    \includegraphics[scale=0.5]{top_view.jpg}
+  \end{center}
+\end{figure}
+\subsubsection{Program Counter}
+Program Counter (PC) : 8 bit register used to store the address in memory of the current instruction being executed.
+\subsubsection{Instruction Register}
+Instruction Register (IR) : 16 bit register, updated at the end of the fetch phase with the instruction to be processed (decoded and executed).
+\subsubsection{Accumulator }
+8 bit register, a general purpose data register, providing data (operand) to be processed by the ALU and used to store any result produced. Note, we can only store one 8 bit value at a time on the processor, other data values will need to be buffered in external memory.
+\subsubsection{Decoder}
+It decodes the 16 bit instruction recieved , tracks the state of the processor and generates control signals based on the first two.
+\subsubsection{ALU}
+It is the arithmetic and logic unit , which can take in 1 or 2 8bit inputs and perform arithmetic and logic based operations on the operand. 
+
 
 \subsection{Functioning of the processor}
 \begin{figure}[H]
