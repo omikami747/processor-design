@@ -1,0 +1,98 @@
+$date
+	Sat Nov 26 03:49:41 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module ins_dec_tb $end
+$var wire 1 ! tstsub $end
+$var wire 1 " tstoutp $end
+$var wire 1 # tstload $end
+$var wire 1 $ tstjumpz $end
+$var wire 1 % tstjumpnz $end
+$var wire 1 & tstjumpnc $end
+$var wire 1 ' tstjumpc $end
+$var wire 1 ( tstjump $end
+$var wire 1 ) tstinp $end
+$var wire 1 * tstbitand $end
+$var wire 1 + tstadd $end
+$var reg 1 , tstdecode $end
+$var reg 1 - tstexecute $end
+$var reg 8 . tstir [7:0] $end
+$scope module dut $end
+$var wire 1 , decode $end
+$var wire 1 - execute $end
+$var wire 8 / ir [7:0] $end
+$var reg 1 + add $end
+$var reg 1 * bitand $end
+$var reg 1 0 decexe $end
+$var reg 1 ) inp $end
+$var reg 1 ( jump $end
+$var reg 1 ' jumpc $end
+$var reg 1 & jumpnc $end
+$var reg 1 % jumpnz $end
+$var reg 1 $ jumpz $end
+$var reg 1 # load $end
+$var reg 1 " outp $end
+$var reg 1 ! sub $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x0
+bx /
+bx .
+x-
+x,
+x+
+x*
+x)
+x(
+x'
+x&
+x%
+x$
+x#
+x"
+x!
+$end
+#10
+1"
+0&
+0'
+0%
+0$
+0(
+0*
+0#
+0!
+0+
+0)
+10
+b11100000 .
+b11100000 /
+0-
+1,
+#30
+0"
+1%
+b100101xx .
+b100101xx /
+#50
+00
+0%
+0&
+0,
+b100111xx .
+b100111xx /
+#70
+1'
+10
+1-
+b10011000 .
+b10011000 /
+#90

@@ -1,0 +1,227 @@
+module ins_dec(
+	       ir,
+	       decode,
+	       execute,
+	       add,
+	       load,
+	       inp,
+	       outp,
+	       jumpz,
+	       jump,
+	       jumpnz,
+	       jumpc,
+	       jumpnc,
+	       sub,
+	       bitand);
+   // inputs
+   input wire [7:0] ir;
+   input wire 	    decode;
+   input wire 	    execute;
+   // outputs
+   output reg 	    load;
+   output reg 	    inp;
+   output reg 	    add;
+   output reg 	    outp; 
+   output reg 	    jumpz;
+   output reg 	    jump;
+   output reg 	    jumpnz;
+   output reg 	    jumpc;
+   output reg	    jumpnc;
+   output reg	    sub;
+   output reg 	    bitand;
+   
+		 
+   reg 	    decexe ;
+   always @ (*)
+     begin
+	if(decode || execute === 1'b1)
+	  begin
+	     decexe <= 1'b1;
+	  end
+	else
+	  begin
+	     decexe <= 1'b0;
+	     
+	  end
+     end
+
+   
+   always @ (*)
+     begin
+	case (ir[7:4])
+	  4'b0000 :
+	    begin
+	       load <= decexe;
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       add <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b0100 :
+	    begin
+	       add <=  decexe;
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b0001 :
+	    begin
+	       bitand <= decexe;
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       add <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b0110 :
+	    begin
+	       sub <= decexe;
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       add <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b1010 :
+	    begin
+	       inp <=  decexe;
+	       add <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b1110 :
+	    begin
+	       outp <=  decexe;
+	       inp <= 1'b0;
+	       add <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0;
+	    end
+	  4'b1000 :
+	    begin
+	       jump <= decexe;   
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       add <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       jumpnc <= 1'b0; 
+	    end
+	  4'b1001 :
+	    begin
+	       case (ir[3:2])
+		 2'b00 :
+		   begin
+		      jumpz <= decexe;
+		      inp <= 1'b0;
+		      outp <= 1'b0;
+		      sub <= 1'b0;
+		      load <= 1'b0;
+		      bitand <= 1'b0;
+		      jump <= 1'b0;
+		      add  <= 1'b0;
+		      jumpnz <= 1'b0;
+		      jumpc <= 1'b0;
+		      jumpnc <= 1'b0;
+		   end
+		 2'b10 :
+		   begin
+		      jumpc <= decexe;
+		      inp <= 1'b0;
+		      outp <= 1'b0;
+		      sub <= 1'b0;
+		      load <= 1'b0;
+		      bitand <= 1'b0;
+		      jump <= 1'b0;
+		      jumpz <= 1'b0;
+		      jumpnz <= 1'b0;
+		      add <= 1'b0;
+		      jumpnc <= 1'b0;
+		   end
+		 2'b01 :
+		   begin
+		      jumpnz <=  decexe;
+		      inp <= 1'b0;
+		      outp <= 1'b0;
+		      sub <= 1'b0;
+		      load <= 1'b0;
+		      bitand <= 1'b0;
+		      jump <= 1'b0;
+		      jumpz <= 1'b0;
+		      add <= 1'b0;
+		      jumpc <= 1'b0;
+		      jumpnc <= 1'b0;
+		   end
+		 2'b11 :
+		   begin
+		      jumpnc <= decexe;
+		      inp <= 1'b0;
+		      outp <= 1'b0;
+		      sub <= 1'b0;
+		      load <= 1'b0;
+		      bitand <= 1'b0;
+		      jump <= 1'b0;
+		      jumpz <= 1'b0;
+		      jumpnz <= 1'b0;
+		      jumpc <= 1'b0;
+		      add <= 1'b0;
+		   end	  
+		 default :
+		   begin
+		      jumpnc <= 1'b0;
+		      inp <= 1'b0;
+		      outp <= 1'b0;
+		      sub <= 1'b0;
+		      load <= 1'b0;
+		      bitand <= 1'b0;
+		      jump <= 1'b0;
+		      jumpz <= 1'b0;
+		      jumpnz <= 1'b0;
+		      jumpc <= 1'b0;
+		      add <= 1'b0;
+		   end // case: default
+	       endcase // case (ir[3:2])
+	    end
+	endcase // case (ir[7:2])
+     end
+endmodule
