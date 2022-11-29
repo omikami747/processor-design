@@ -53,7 +53,7 @@ module decoder_tb;
 	@(posedge tstclk)
 	  begin
 	     tstclr <= 1'b1;
-	     tstir <= 8'b01000000;
+	     tstir <= 8'b11100000;
 	  end
 	repeat (3)
 	@(posedge tstclk)
@@ -62,14 +62,6 @@ module decoder_tb;
 	@(posedge tstclk)
 	  begin
 	     tstir <= 8'b10010100;
-	  end
-	repeat (3)
-	@(posedge tstclk)
-	  begin
-	  end
-	@(posedge tstclk)
-	  begin
-	     tstir <= 8'b10011000;
 	  end
         
 	
