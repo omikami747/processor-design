@@ -1,0 +1,53 @@
+$date
+	Tue Nov 29 07:44:56 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module alu_tb $end
+$var wire 8 ! tstdout [7:0] $end
+$var wire 1 " tstcarry $end
+$var reg 8 # tsta [7:0] $end
+$var reg 5 $ tstalu [4:0] $end
+$var reg 8 % tstb [7:0] $end
+$scope module dut $end
+$var wire 8 & a [7:0] $end
+$var wire 5 ' alu [4:0] $end
+$var wire 8 ( b [7:0] $end
+$var wire 8 ) dout [7:0] $end
+$var wire 1 " carry $end
+$var reg 9 * temp_dout [8:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b1100 *
+b1100 )
+b111 (
+b0 '
+b101 &
+b111 %
+b0 $
+b101 #
+0"
+b1100 !
+$end
+#20
+b11111110 !
+b11111110 )
+1"
+b111111110 *
+b1100 $
+b1100 '
+#40
+b101 !
+b101 )
+0"
+b101 *
+b1 $
+b1 '
+#60
