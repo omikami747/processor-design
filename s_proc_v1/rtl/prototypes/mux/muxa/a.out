@@ -1,0 +1,43 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x56349106ed90 .scope module, "mux_a" "mux_a" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "muxa";
+    .port_info 1 /INPUT 8 "acc";
+    .port_info 2 /INPUT 8 "pc";
+    .port_info 3 /OUTPUT 8 "a";
+v0x5634910707f0_0 .var "a", 7 0;
+o0x7f808044b048 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x563491070c00_0 .net "acc", 7 0, o0x7f808044b048;  0 drivers
+o0x7f808044b078 .functor BUFZ 1, C4<z>; HiZ drive
+v0x5634910b6b30_0 .net "muxa", 0 0, o0x7f808044b078;  0 drivers
+o0x7f808044b0a8 .functor BUFZ 8, C4<zzzzzzzz>; HiZ drive
+v0x5634910b6bd0_0 .net "pc", 7 0, o0x7f808044b0a8;  0 drivers
+E_0x56349106f4f0 .event edge, v0x5634910b6b30_0, v0x563491070c00_0, v0x5634910b6bd0_0;
+    .scope S_0x56349106ed90;
+T_0 ;
+    %wait E_0x56349106f4f0;
+    %load/vec4 v0x5634910b6b30_0;
+    %cmpi/e 0, 0, 1;
+    %jmp/0xz  T_0.0, 6;
+    %load/vec4 v0x563491070c00_0;
+    %assign/vec4 v0x5634910707f0_0, 0;
+    %jmp T_0.1;
+T_0.0 ;
+    %load/vec4 v0x5634910b6bd0_0;
+    %assign/vec4 v0x5634910707f0_0, 0;
+T_0.1 ;
+    %jmp T_0;
+    .thread T_0, $push;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "muxa.v";

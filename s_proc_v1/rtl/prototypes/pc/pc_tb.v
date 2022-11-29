@@ -1,13 +1,13 @@
 module pc_tb;
    reg tstclk;
-   reg tstrst;
+   reg tstclr;
    reg [7:0] tstadrs_in;
    reg 	     tsten_pc ;
    wire [7:0] tstadrs_out;
 
    pc dut(
 	  .clk(tstclk),
-	  .rst(tstrst),
+	  .clr(tstclr),
 	  .adrs_in(tstadrs_in),
 	  .adrs_out(tstadrs_out),
 	  .en_pc(tsten_pc)
@@ -24,7 +24,7 @@ module pc_tb;
      begin
 	$dumpvars;
 	
-	tstrst <= 1'b0;
+	tstclr <= 1'b0;
 	
 	tsten_pc <= 1'b1;
 	
@@ -32,7 +32,7 @@ module pc_tb;
 	
 	@(posedge tstclk)
 	  begin
-	     tstrst <= 1'b1;
+	     tstclr <= 1'b1;
 	     tstadrs_in <= 8'b00000001;
 	     
 	  end

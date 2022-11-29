@@ -1,14 +1,20 @@
 module seq_gen_tb;
    reg tstclk;
-   reg 	     tstce;
+   
    reg 	     tstclr;
-   wire [3:0] tststate;
+   wire      tstf;
+   wire      tstd;
+   wire      tste;
+   wire      tsti;
+   
 
    seq_gen dut(
 	       .clk(tstclk),
-	       .ce(tstce),
 	       .clr(tstclr),
-	       .state(tststate)
+	       .f(tstf),
+	       .d(tstd),
+	       .e(tste),
+	       .i(tsti)
 	       );
    
    always
@@ -19,18 +25,13 @@ module seq_gen_tb;
    initial
      begin
 	$dumpvars;
-	tstce <= 0;
-	#10
+	#20;
+	@(posedge tstclk)
 	tstclr <= 0;
-	#10
-	tstce <= 1;
-	#10
-	tstclr <=1;
-	#50;
-	tstclr <=0;
-	#10;
+	#20;
+	@(posedge tstclk)
 	tstclr <= 1;
-	#50;
+	#100;
 	
 		  
 	$finish;

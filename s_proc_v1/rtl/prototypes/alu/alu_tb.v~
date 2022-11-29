@@ -1,0 +1,25 @@
+module alu_tb;
+   reg tsta;
+   reg tstb;
+   reg tstalu;
+   wire tstdout;
+   wire tstcarry;
+
+   alu dut(
+	   .a(tsta),
+	   .b(tstb),
+	   .alu(tstalu),
+	   .dout(tstdout),
+	   .carry(tstcarry)
+	   );
+   initial
+     begin
+	$dumpvars;
+	tsta <= 8'b00000001;
+	tstb <= 8'b00000111;
+	tstalu <= 5'b00000;
+	#20;
+	
+	$finish;
+     end
+endmodule

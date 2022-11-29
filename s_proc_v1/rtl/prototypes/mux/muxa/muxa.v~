@@ -1,0 +1,8 @@
+module mux_a(
+	    muxa,
+	    acc,
+	    pc,
+	    a)
+  always @(*)
+    begin
+       if(muxa)
