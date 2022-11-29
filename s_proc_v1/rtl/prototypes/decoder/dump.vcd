@@ -1,5 +1,5 @@
 $date
-	Sat Nov 26 03:49:41 2022
+	Tue Nov 29 03:02:41 2022
 $end
 $version
 	Icarus Verilog
@@ -7,92 +7,413 @@ $end
 $timescale
 	1s
 $end
-$scope module ins_dec_tb $end
-$var wire 1 ! tstsub $end
-$var wire 1 " tstoutp $end
-$var wire 1 # tstload $end
-$var wire 1 $ tstjumpz $end
-$var wire 1 % tstjumpnz $end
-$var wire 1 & tstjumpnc $end
-$var wire 1 ' tstjumpc $end
-$var wire 1 ( tstjump $end
-$var wire 1 ) tstinp $end
-$var wire 1 * tstbitand $end
-$var wire 1 + tstadd $end
-$var reg 1 , tstdecode $end
-$var reg 1 - tstexecute $end
-$var reg 8 . tstir [7:0] $end
+$scope module decoder_tb $end
+$var wire 1 ! tstrw $end
+$var wire 1 " tstmuxc $end
+$var wire 1 # tstmuxb $end
+$var wire 1 $ tstmuxa $end
+$var wire 1 % tsten_pc $end
+$var wire 1 & tsten_ir $end
+$var wire 1 ' tsten_da $end
+$var wire 5 ( tstalu [4:0] $end
+$var reg 1 ) tstcarry $end
+$var reg 1 * tstclk $end
+$var reg 1 + tstclr $end
+$var reg 8 , tstir [7:0] $end
+$var reg 1 - tstzero $end
 $scope module dut $end
-$var wire 1 , decode $end
-$var wire 1 - execute $end
-$var wire 8 / ir [7:0] $end
-$var reg 1 + add $end
-$var reg 1 * bitand $end
-$var reg 1 0 decexe $end
-$var reg 1 ) inp $end
-$var reg 1 ( jump $end
-$var reg 1 ' jumpc $end
-$var reg 1 & jumpnc $end
-$var reg 1 % jumpnz $end
-$var reg 1 $ jumpz $end
-$var reg 1 # load $end
-$var reg 1 " outp $end
-$var reg 1 ! sub $end
+$var wire 1 ) carry $end
+$var wire 1 * clk $end
+$var wire 1 + clr $end
+$var wire 8 . ir [7:0] $end
+$var wire 1 - zero $end
+$var wire 1 / i $end
+$var wire 1 0 f $end
+$var wire 1 1 e $end
+$var wire 1 2 d $end
+$var reg 1 3 add $end
+$var reg 5 4 alu [4:0] $end
+$var reg 1 5 bitand $end
+$var reg 1 6 carry_reg $end
+$var reg 1 7 decexe $end
+$var reg 1 ' en_da $end
+$var reg 1 & en_ir $end
+$var reg 1 % en_pc $end
+$var reg 1 8 inp $end
+$var reg 1 9 jump $end
+$var reg 1 : jump_not_taken $end
+$var reg 1 ; jump_taken $end
+$var reg 1 < jumpc $end
+$var reg 1 = jumpnc $end
+$var reg 1 > jumpnz $end
+$var reg 1 ? jumpz $end
+$var reg 1 @ load $end
+$var reg 1 $ muxa $end
+$var reg 1 # muxb $end
+$var reg 1 " muxc $end
+$var reg 1 A outp $end
+$var reg 1 ! rw $end
+$var reg 4 B state [3:0] $end
+$var reg 1 C sub $end
+$var reg 1 D zero_reg $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-x0
-bx /
+0D
+xC
+b0 B
+xA
+x@
+x?
+x>
+x=
+x<
+0;
+1:
+x9
+x8
+07
+06
+x5
+b0x0xx 4
+x3
+02
+01
+00
+0/
 bx .
-x-
-x,
-x+
-x*
-x)
-x(
-x'
-x&
-x%
-x$
-x#
-x"
-x!
-$end
-#10
-1"
-0&
+0-
+bx ,
+0+
+0*
+1)
+b0x0xx (
 0'
+0&
 0%
 0$
-0(
-0*
-0#
+x#
+x"
 0!
-0+
-0)
-10
-b11100000 .
-b11100000 /
-0-
-1,
-#30
+$end
+#5
+1*
+#10
+0*
+#15
+1*
+#20
+0*
+#25
+0#
 0"
-1%
-b100101xx .
-b100101xx /
-#50
-00
-0%
-0&
-0,
-b100111xx .
-b100111xx /
-#70
-1'
+b0 (
+b0 4
+0=
+0<
+0>
+0?
+09
+05
+0@
+0C
+03
+08
+0A
+b11100000 ,
+b11100000 .
+1+
+1*
+#30
+0*
+#35
+1&
 10
-1-
-b10011000 .
-b10011000 /
+b1000 B
+1*
+#40
+0*
+#45
+1"
+b10 (
+b10 4
+1A
+0&
+17
+00
+12
+b100 B
+1*
+#50
+0*
+#55
+1!
+02
+11
+b10 B
+1*
+#60
+0*
+#65
+0"
+0;
+0!
+07
+1%
+1$
+b10100 (
+b10100 4
+0A
+0>
+01
+1/
+b1 B
+b10010100 ,
+b10010100 .
+1*
+#70
+0*
+#75
+1&
+0%
+0$
+b0 (
+b0 4
+10
+0/
+b1000 B
+1*
+#80
+0*
+#85
+1;
+b11 (
+b11 4
+1>
+0&
+17
+00
+12
+b100 B
+1*
 #90
+0*
+#95
+1%
+02
+11
+b10 B
+0:
+1*
+#100
+0*
+#105
+0;
+0>
+07
+0%
+1$
+b10100 (
+b10100 4
+01
+1/
+b1 B
+1*
+#110
+0*
+#115
+1&
+0$
+b0 (
+b0 4
+0%
+10
+0/
+b1000 B
+1:
+1*
+#120
+0*
+#125
+1;
+b11 (
+b11 4
+1>
+0&
+17
+00
+12
+b100 B
+1*
+#130
+0*
+#135
+1%
+02
+11
+b10 B
+0:
+1*
+#140
+0*
+#145
+0;
+0>
+07
+0%
+1$
+b10100 (
+b10100 4
+01
+1/
+b1 B
+1*
+#150
+0*
+#155
+1&
+0$
+b0 (
+b0 4
+0%
+10
+0/
+b1000 B
+1:
+1*
+#160
+0*
+#165
+1;
+b11 (
+b11 4
+1>
+0&
+17
+00
+12
+b100 B
+1*
+#170
+0*
+#175
+1%
+02
+11
+b10 B
+0:
+1*
+#180
+0*
+#185
+0;
+0>
+07
+0%
+1$
+b10100 (
+b10100 4
+01
+1/
+b1 B
+1*
+#190
+0*
+#195
+1&
+0$
+b0 (
+b0 4
+0%
+10
+0/
+b1000 B
+1:
+1*
+#200
+0*
+#205
+1;
+b11 (
+b11 4
+1>
+0&
+17
+00
+12
+b100 B
+1*
+#210
+0*
+#215
+1%
+02
+11
+b10 B
+0:
+1*
+#220
+0*
+#225
+0;
+0>
+07
+0%
+1$
+b10100 (
+b10100 4
+01
+1/
+b1 B
+1*
+#230
+0*
+#235
+1&
+0$
+b0 (
+b0 4
+0%
+10
+0/
+b1000 B
+1:
+1*
+#240
+0*
+#245
+1;
+b11 (
+b11 4
+1>
+0&
+17
+00
+12
+b100 B
+1*
+#250
+0*
+#255
+1%
+02
+11
+b10 B
+0:
+1*
+#260
+0*
+#265
+0;
+0>
+07
+0%
+1$
+b10100 (
+b10100 4
+01
+1/
+b1 B
+1*
