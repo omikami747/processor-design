@@ -1,0 +1,30 @@
+module mem_ctrl(
+		din,
+		dout,
+		rw,
+		adrs,
+		data_in,
+		data_out,
+		adrs_out,
+		rw_out
+		);
+   inpput wire din;
+   inpput wire dout;
+   inpput wire rw;
+   inpput wire adrs;
+   inpput wire data_in;
+   inpput wire data_out;
+   inpput wire adrs_out;
+   inpput wire rw_out;
+   
+
+   
+   assign data_in = din ;
+   assign data_out = dout;
+   assign rw_out = rw;
+   assign adrs_out = adrs;
+
+   
+endmodule
+		
+		
