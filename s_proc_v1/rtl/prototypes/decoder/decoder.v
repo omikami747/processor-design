@@ -87,10 +87,53 @@ module decoder(
    assign d = state[2];
    assign e = state[1];
    assign i = state[0];
+   
+   //////////////////////////////////////////////////////////////////////
+   //
+   //   carry register
+   //
+   //////////////////////////////////////////////////////////////////////
+   
+   reg carry_reg;
 
+   always @(posedge clk or negedge clr)
+     begin
+	if(clr === 1'b0)
+	  begin
+	     carry_reg <= 1'b0;
+	  end
+	else
+	  begin
+	     if(add | sub | bitand === 1'b1)
+	       begin
+		  carry_reg <= carry;
+	       end
+	  end
+     end // always @ (posedge clk or negedge clr)
 
+   //////////////////////////////////////////////////////////////////////
+   //
+   //   zero register
+   //
+   //////////////////////////////////////////////////////////////////////
 
+   reg zero_reg;
 
+   always @(posedge clk or negedge clr)
+     begin
+	if(clr === 1'b0)
+	  begin
+	     zero_reg <= 1'b0;
+	  end
+	else
+	  begin
+	     if(add | sub | bitand === 1'b1)
+	       begin
+		  zero_reg <= zero;
+	       end
+	  end
+     end // always @ (posedge clk or negedge clr)
+   
 
 
    
@@ -414,17 +457,9 @@ module decoder(
    //
    //////////////////////////////////////////////////////////////////////
 
-   always @(*)
-     begin
-	if(i === 1'b1)
-	  begin
-	     muxa <= 1'b1;
-	  end
-	else
-	  begin
-	     muxa <= 1'b0;
-	  end
-     end // always @ (*)
+   //////////////////////////////////////////////////////////////////////
+   //  MUX - A
+   //////////////////////////////////////////////////////////////////////  
 
    always @(*)
      begin
@@ -437,6 +472,11 @@ module decoder(
 	     muxa <= 1'b0;
 	  end
      end // always @ (*)
+
+   //////////////////////////////////////////////////////////////////////
+   //  MUX - B
+   //////////////////////////////////////////////////////////////////////
+   
    always @(*)
      begin
 	if((load | add | bitand | sub ) === 1'b1)
@@ -448,6 +488,11 @@ module decoder(
 	     muxb <= 1'b0;
 	  end
      end // always @ (*)
+
+   //////////////////////////////////////////////////////////////////////
+   //  MUX - C
+   //////////////////////////////////////////////////////////////////////
+   
    always @(*)
      begin
 	if((inp | outp) === 1'b1)
@@ -501,8 +546,49 @@ module decoder(
    //  Program Counter update control signal
    //
    //////////////////////////////////////////////////////////////////////
-
+   
+   reg jump_taken;
+   reg jump_not_taken;
+   
+   always @(*)  
+     begin
+	if((jumpz & zero_reg) | (jumpnz &(~zero_reg)) | (jumpc & carry_reg) | (jumpnc & (~zero_reg)) | (jump)  === 1'b1)
+	  begin
+	     jump_taken <= 1'b1;
+	  end
+	else
+	  begin
+	     jump_taken <= 1'b0;
+	  end
+     end // always @ (*)
+   
+   
+   always @(posedge clk or negedge clr)
+     begin
+	if(clr === 1'b0)
+	  begin
+	     jump_not_taken <= 1'b1;
+	  end
+	else
+	  begin
+	     jump_not_taken <= ~jump_taken;
+	  end
+     end // always @ (posedge clk or negedge clr)
+   
+   always @(*)
+     begin
+	if((i & jump_not_taken) | (e & jump_taken) === 1'b1)
+	  begin
+	     en_pc <= 1'b1;   
+	  end
+	else
+	  begin
+	     en_pc <= 1'b0;
+	  end
+     end // always @ (*)
    
 
+   
+   
    
 endmodule

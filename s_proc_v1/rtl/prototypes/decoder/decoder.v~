@@ -1,0 +1,42 @@
+module decoder(
+	       clk,
+	       clr,
+	       carry,
+	       zero,
+	       ir,
+	       rw,
+	       alu,
+	       muxa,
+	       muxb,
+	       muxc,
+	       en_ir,
+	       en_da,
+	       en_pc);
+   input wire clk ;
+   input wire clr ;
+   input wire carry;
+   input wire zero;
+   input wire [7:0] ir;
+
+   output wire 	    ram;
+   output wire [4:0] alu;
+   output wire 	     muxa;
+   output wire 	     muxb;
+   output wire 	     muxc;
+   output wire 	     en_ir;	     
+   output wire 	     en_pc;
+   output wire 	     en_da;
+
+   wire 	     add;
+   wire 	     load;
+   wire 	     outp;
+   wire 	     inp;
+   wire 	     jumpz;
+   wire 	     jump;
+   wire 	     jumpnz;
+   wire 	     jumpc;
+   wire 	     jumpnc;
+   wire 	     sub;
+   wire 	     bitand;
+	     
+endmodule
