@@ -12,7 +12,6 @@ module decoder(
 	       en_ir,
 	       en_da,
 	       en_pc);
-   
    input wire clk ;
    input wire clr ;
    input wire carry;
@@ -28,23 +27,7 @@ module decoder(
    output reg 	    en_pc;
    output reg 	    en_da;
    
-   localparam IDLE           =  4'b0000;
-   localparam FETCH          =  4'b1000;
-   localparam DECODE         =  4'b0100;
-   localparam EXECUTE        =  4'b0010;
-   localparam INCREMENT      =  4'b0001;
-   localparam LOAD           =  4'b0000;
-   localparam ADD            =  4'b0100;
-   localparam AND            =  4'b0001;
-   localparam SUB            =  4'b0110;
-   localparam INPUT          =  4'b1010;
-   localparam OUTPUT         =  4'b1110;
-   localparam JUMP           =  4'b1000;
-   localparam JUMP_CONDITION =  4'b1001;
-   localparam ZERO           =  2'b00  ;
-   localparam CARRY          =  2'b10  ;
-   localparam NO_ZERO        =  2'b01  ;
-   localparam NO_CARRY       =  2'b11  ;
+
    
    //////////////////////////////////////////////////////////////////////
    //   Sequence Generator 
@@ -59,41 +42,42 @@ module decoder(
    wire 	     e;
    wire 	     i;
    
+   
    reg [3:0] 	     state;
    always @(posedge clk or negedge clr)
      begin
 	
-	if(clr == 1'b0)
+	if(clr === 1'b0)
 	  begin
-	     state <= IDLE;
+	     state <= 4'b0000;
 	     
 	  end
 	else
 	  begin
 	     case(state)
-	       IDLE:
+	       4'b0000:
 		 begin
-		    state <= FETCH;
+		    state <= 4'b1000;
 		 end
-	       FETCH:
+	       4'b1000:
 		 begin
-		    state <= DECODE;
+		    state <= 4'b0100;
 		 end
-	       DECODE:
+	       4'b0100:
 		 begin
-		    state <= EXECUTE;
+		    state <= 4'b0010;
 		 end
-	       EXECUTE:
+	       4'b0010:
 		 begin
-		    state <= INCREMENT;
+		    state <= 4'b0001;
 		 end
-	       INCREMENT:
+	       4'b0001:
 		 begin
-		    state <= FETCH;
+		    state <= 4'b1000;
 		 end
 	       default:	// 
 		 begin
-		    state <= IDLE;
+		    state <= 4'b0000;
 		 end
 	     endcase // case (state)
 	     
@@ -111,39 +95,39 @@ module decoder(
    //////////////////////////////////////////////////////////////////////
    
    reg carry_reg;
-   
+
    always @(posedge clk or negedge clr)
      begin
-	if(clr == 1'b0)
+	if(clr === 1'b0)
 	  begin
 	     carry_reg <= 1'b0;
 	  end
 	else
 	  begin
-	     if(add | sub | bitand == 1'b1)
+	     if(add | sub | bitand === 1'b1)
 	       begin
 		  carry_reg <= carry;
 	       end
 	  end
      end // always @ (posedge clk or negedge clr)
-   
+
    //////////////////////////////////////////////////////////////////////
    //
    //   zero register
    //
    //////////////////////////////////////////////////////////////////////
-   
+
    reg zero_reg;
-   
+
    always @(posedge clk or negedge clr)
      begin
-	if(clr == 1'b0)
+	if(clr === 1'b0)
 	  begin
 	     zero_reg <= 1'b0;
 	  end
 	else
 	  begin
-	     if(add | sub | bitand == 1'b1)
+	     if(add | sub | bitand === 1'b1)
 	       begin
 		  zero_reg <= zero;
 	       end
@@ -179,21 +163,22 @@ module decoder(
    reg 	    decexe ;
    always @ (*)
      begin
-	if(d || e == 1'b1)
+	if(d || e === 1'b1)
 	  begin
 	     decexe <= 1'b1;
 	  end
 	else
 	  begin
-	     decexe <= 1'b0;	     
+	     decexe <= 1'b0;
+	     
 	  end
      end
-   
+
    
    always @ (*)
      begin
 	case (ir[7:4])
-	  LOAD :
+	  4'b0000 :
 	    begin
 	       load <= decexe;
 	       inp <= 1'b0;
@@ -207,7 +192,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  ADD :
+	  4'b0100 :
 	    begin
 	       add <=  decexe;
 	       inp <= 1'b0;
@@ -221,7 +206,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  BITAND :
+	  4'b0001 :
 	    begin
 	       bitand <= decexe;
 	       inp <= 1'b0;
@@ -235,7 +220,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  SUB :
+	  4'b0110 :
 	    begin
 	       sub <= decexe;
 	       inp <= 1'b0;
@@ -249,7 +234,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  INPUT :
+	  4'b1010 :
 	    begin
 	       inp <=  decexe;
 	       add <= 1'b0;
@@ -263,7 +248,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  OUTPUT :
+	  4'b1110 :
 	    begin
 	       outp <=  decexe;
 	       inp <= 1'b0;
@@ -277,7 +262,7 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0;
 	    end
-	  JUMP :
+	  4'b1000 :
 	    begin
 	       jump <= decexe;   
 	       inp <= 1'b0;
@@ -291,10 +276,10 @@ module decoder(
 	       jumpc <= 1'b0;
 	       jumpnc <= 1'b0; 
 	    end
-	  JUMP_CONDITION :
+	  4'b1001 :
 	    begin
 	       case (ir[3:2])
-		 ZERO :
+		 2'b00 :
 		   begin
 		      jumpz <= decexe;
 		      inp <= 1'b0;
@@ -308,7 +293,7 @@ module decoder(
 		      jumpc <= 1'b0;
 		      jumpnc <= 1'b0;
 		   end
-		 CARRY :
+		 2'b10 :
 		   begin
 		      jumpc <= decexe;
 		      inp <= 1'b0;
@@ -322,7 +307,7 @@ module decoder(
 		      add <= 1'b0;
 		      jumpnc <= 1'b0;
 		   end
-		 NO_ZERO :
+		 2'b01 :
 		   begin
 		      jumpnz <=  decexe;
 		      inp <= 1'b0;
@@ -336,7 +321,7 @@ module decoder(
 		      jumpc <= 1'b0;
 		      jumpnc <= 1'b0;
 		   end
-		 NO_CARRY:
+		 2'b11 :
 		   begin
 		      jumpnc <= decexe;
 		      inp <= 1'b0;
@@ -385,7 +370,7 @@ module decoder(
    
    always @(*)
      begin
-	if (e & outp == 1'b1)
+	if (e & outp === 1'b1)
 	  begin
 	     rw <= 1'b1;
 	  end
@@ -395,15 +380,18 @@ module decoder(
 	  end
      end // always @ (*)
 
+
+   
    //////////////////////////////////////////////////////////////////////
    //
    //    ALU control signals
    //
    //////////////////////////////////////////////////////////////////////
    
+   
    always @(*)
      begin
-	if((bitand | inp | load | jump | jumpc | jumpnc | jumpz | jumpnz) == 1'b1)
+	if((bitand | inp | load | jump | jumpc | jumpnc | jumpz | jumpnz) === 1'b1)
 	  begin
 	     alu[0] <= 1'b1;
 	  end
@@ -413,9 +401,10 @@ module decoder(
 	  end
      end // always @ (*)
 
+
     always @(*)
      begin
-	if((outp | inp | load | jump | jumpc | jumpnc | jumpz | jumpnz) == 1'b1)
+	if((outp | inp | load | jump | jumpc | jumpnc | jumpz | jumpnz) === 1'b1)
 	  begin
 	     alu[1] <= 1'b1;
 	  end
@@ -427,7 +416,7 @@ module decoder(
 
    always @(*)
      begin
-	if(i | sub == 1'b1)
+	if(i | sub === 1'b1)
 	  begin
 	     alu[2] <= 1'b1;
 	  end
@@ -439,7 +428,7 @@ module decoder(
 
    always @(*)
      begin
-	if( sub == 1'b1)
+	if( sub === 1'b1)
 	  begin
 	     alu[3] <= 1'b1;
 	  end
@@ -451,7 +440,7 @@ module decoder(
    
    always @(*)
      begin
-	if(i == 1'b1)
+	if(i === 1'b1)
 	  begin
 	     alu[4] <= 1'b1;
 	  end
@@ -460,6 +449,7 @@ module decoder(
 	     alu[4] <= 1'b0;
 	  end
      end // always @ (*)
+
 
    //////////////////////////////////////////////////////////////////////
    //
@@ -473,7 +463,7 @@ module decoder(
 
    always @(*)
      begin
-	if(i == 1'b1)
+	if(i === 1'b1)
 	  begin
 	     muxa <= 1'b1;
 	  end
@@ -489,7 +479,7 @@ module decoder(
    
    always @(*)
      begin
-	if((load | add | bitand | sub ) == 1'b1)
+	if((load | add | bitand | sub ) === 1'b1)
 	  begin
 	     muxb <= 1'b1;
 	  end
@@ -505,7 +495,7 @@ module decoder(
    
    always @(*)
      begin
-	if((inp | outp) == 1'b1)
+	if((inp | outp) === 1'b1)
 	  begin
 	     muxc <= 1'b1;
 	  end
@@ -523,7 +513,7 @@ module decoder(
 
    always @(*)
      begin
-	if(f == 1'b1)
+	if(f === 1'b1)
 	  begin
 	     en_ir <= 1'b1;
 	  end
@@ -541,7 +531,7 @@ module decoder(
 
    always @(*)
      begin
-	if((e & (load | add | sub | bitand | inp)) == 1'b1)
+	if((e & (load | add | sub | bitand | inp)) === 1'b1)
 	  begin
 	     en_da <= 1'b1;
 	  end
@@ -562,7 +552,7 @@ module decoder(
    
    always @(*)  
      begin
-	if((jumpz & zero_reg) | (jumpnz &(~zero_reg)) | (jumpc & carry_reg) | (jumpnc & (~zero_reg)) | (jump)  == 1'b1)
+	if((jumpz & zero_reg) | (jumpnz &(~zero_reg)) | (jumpc & carry_reg) | (jumpnc & (~zero_reg)) | (jump)  === 1'b1)
 	  begin
 	     jump_taken <= 1'b1;
 	  end
@@ -575,7 +565,7 @@ module decoder(
    
    always @(posedge clk or negedge clr)
      begin
-	if(clr == 1'b0)
+	if(clr === 1'b0)
 	  begin
 	     jump_not_taken <= 1'b1;
 	  end
@@ -587,7 +577,7 @@ module decoder(
    
    always @(*)
      begin
-	if((i & jump_not_taken) | (e & jump_taken) == 1'b1)
+	if((i & jump_not_taken) | (e & jump_taken) === 1'b1)
 	  begin
 	     en_pc <= 1'b1;   
 	  end
@@ -597,7 +587,8 @@ module decoder(
 	  end
      end // always @ (*)
    
+
+   
+   
+   
 endmodule
-   
-   
-   

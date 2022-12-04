@@ -12,12 +12,13 @@ module mem_ctrl(
    input wire dout;
    input wire rw;
    input wire adrs;
-   input wire data_in;
-   input wire data_out;
-   input wire adrs_out;
-   input wire rw_out;
    
-
+   output wire data_in;
+   output wire data_out;
+   output wire adrs_out;
+   output wire rw_out;
+   
+   
    
    assign data_in = din ;
    assign data_out = dout;

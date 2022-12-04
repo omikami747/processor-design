@@ -11,7 +11,8 @@ module decoder(
 	       muxc,
 	       en_ir,
 	       en_da,
-	       en_pc);
+	       en_pc
+	       );
    
    input wire clk ;
    input wire clr ;
@@ -35,7 +36,7 @@ module decoder(
    localparam INCREMENT      =  4'b0001;
    localparam LOAD           =  4'b0000;
    localparam ADD            =  4'b0100;
-   localparam AND            =  4'b0001;
+   localparam BITAND            =  4'b0001;
    localparam SUB            =  4'b0110;
    localparam INPUT          =  4'b1010;
    localparam OUTPUT         =  4'b1110;

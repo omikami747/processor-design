@@ -2,7 +2,8 @@ module mux_c(
 	     muxc,
 	     pc,
 	     ir,
-	     c);
+	     c
+	     );
    
    input wire muxc;
    input wire [7:0] pc;

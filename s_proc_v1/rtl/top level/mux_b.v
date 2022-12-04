@@ -2,7 +2,8 @@ module mux_b(
 	     muxb,
 	     mem,
 	     ir,
-	     b);
+	     b
+	     );
    
    input wire muxb;
    input wire [7:0] mem;

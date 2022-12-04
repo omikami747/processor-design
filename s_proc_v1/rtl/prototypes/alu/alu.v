@@ -4,39 +4,47 @@ module alu(
 	   alu,
 	   dout,
 	   carry);
+   
    input wire [7:0] a;
    input wire [7:0] b;
    input wire [4:0] alu;
+   
    output wire [7:0] dout;
    output wire 	     carry;
 
    reg [8:0] 	    temp_dout;
-   
+
+   localparam ADD        = 5'b00000 ;
+   localparam BITAND     = 5'b00001 ;
+   localparam INP_A      = 5'b00010 ;
+   localparam INP_B      = 5'b00011 ;
+   localparam SUB        = 5'b01100 ;
+   localparam INCREMENT  = 5'b10100 ;
    
    always @(*)
      begin
 	case (alu)
-	  5'b00000 :
+	  ADD :
 	    begin
 	       temp_dout <= (a + b);
 	    end
-	  5'b00001 :
+	  BITAND :
 	    begin
 	       temp_dout <= (a & b);
 	    end
-	  5'b00010 :
+	  INP_A :
 	    begin
 	       temp_dout <= (a);
 	    end
-	  5'b00011 :
+	  INP_B :
 	    begin
 	       temp_dout <= (b);
 	    end
-	  5'b01100 :
+	  SUB :
 	    begin
 	       temp_dout <= (a-b);
 	    end
-	  5'b10100 :
+	  INCREMENT :
 	    begin
 	       temp_dout <= (a + 1);
 	    end

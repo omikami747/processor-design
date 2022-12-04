@@ -3,7 +3,9 @@ module alu(
 	   b,
 	   alu,
 	   dout,
-	   carry);
+	   carry,
+	   zero
+	   );
    
    input wire [7:0] a;
    input wire [7:0] b;
@@ -11,7 +13,7 @@ module alu(
    
    output wire [7:0] dout;
    output wire 	     carry;
-
+   output reg       zero ;
    reg [8:0] 	    temp_dout;
 
    localparam ADD        = 5'b00000 ;
@@ -53,6 +55,18 @@ module alu(
 
    assign dout = temp_dout[7:0];
    assign carry = temp_dout[8];
+
+   always @(*)
+     begin
+	if(temp_dout == 9'b000000000)
+	  begin
+	     zero <= 1'b1;
+	  end
+	else
+	  begin
+	     zero <= 1'b0;
+	  end
+     end
 
 endmodule
 	       

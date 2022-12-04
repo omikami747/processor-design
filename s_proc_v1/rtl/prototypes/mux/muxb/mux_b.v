@@ -7,6 +7,7 @@ module mux_b(
    input wire muxb;
    input wire [7:0] mem;
    input wire [7:0] ir;
+   
    output reg [7:0] b;
    
    always @(*)
@@ -20,6 +21,7 @@ module mux_b(
 	     b <= ir;
 	  end
      end // always @ (*)
+
 endmodule // mux_b
 
 

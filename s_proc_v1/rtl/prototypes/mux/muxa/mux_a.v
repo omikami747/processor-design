@@ -4,9 +4,10 @@ module mux_a(
 	     pc,
 	     a);
    
-   input wire muxa;
+   input wire      muxa;
    input wire [7:0] acc;
-   input wire [7:0] pc;
+   input wire [7:0]  pc;
+   
    output reg [7:0] a;
    
    always @(*)
@@ -20,5 +21,6 @@ module mux_a(
 	     a <= pc;
 	  end
      end // always @ (*)
+   
 endmodule // mux_a
 

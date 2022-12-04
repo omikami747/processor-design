@@ -1,0 +1,39 @@
+module ram(
+	   clk,
+	   clr,
+	   rw,
+	   adrs,
+	   dout,
+	   din
+	   );
+   input wire clk ;
+   input wire clr;
+   input wire rw ;
+   input wire [7:0] adrs  ;
+   input wire [7:0] din  ;
+   
+   output wire [15:0] dout;
+   
+   reg [15:0] mem [255:0] ;
+
+   always @(posedge clk or negedge clr)
+     begin
+	if(clr == 1'b0)
+	  begin
+	  end
+	else
+	  if(rw == 1'b1)
+	    begin
+	       mem[adrs] <= {8'b00000000,din};
+	    end
+     end // always @ (posedge clk or negedge clr)
+   
+   assign dout = mem[adrs] ;
+   
+   initial
+     begin
+	$readmemb("ram_contents.txt",mem,0,255);
+     end
+endmodule // ram
+
+   

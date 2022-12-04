@@ -5,31 +5,25 @@ module acc(
 	  acc_out,
 	  en_da
 	  );
+  
    input wire clk;
    input wire clr;
    input wire [7:0] acc_in;
    input wire 	    en_da;
    
-   output  wire [7:0] acc_out;
-   reg [7:0] 	      temp_acc;
-   
+   output  reg [7:0] acc_out;
+     
    always @(posedge clk or negedge clr)
      begin
 	if( clr  === 1'b0)
 	  begin
-	     temp_acc <= 8'b00000000;
+	     acc_out <= 'h0;
 	  end
 	else if(en_da === 1'b1)
 	  begin
-	     temp_acc <= acc_in;
-	  end
-	else
-	  begin
+	     acc_out <= acc_in;
 	  end
      end // always @ (posedge clk or negedge clr)
-   
-   assign acc_out = temp_acc;
-   
    
 endmodule // acc
 

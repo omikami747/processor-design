@@ -7,6 +7,7 @@ module mux_c(
    input wire muxc;
    input wire [7:0] pc;
    input wire [7:0] ir;
+   
    output reg [7:0] c;
    
    always @(*)
@@ -20,4 +21,5 @@ module mux_c(
 	     c <= ir;
 	  end
      end // always @ (*)
+   
 endmodule // mux_c

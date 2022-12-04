@@ -2,7 +2,8 @@ module mux_a(
 	     muxa,
 	     acc,
 	     pc,
-	     a);
+	     a
+	     );
    
    input wire      muxa;
    input wire [7:0] acc;
