@@ -1,13 +1,11 @@
 module ram(
 	   clk,
-	   clr,
 	   rw,
 	   adrs,
 	   dout,
 	   din
 	   );
    input wire clk ;
-   input wire clr;
    input wire rw ;
    input wire [7:0] adrs  ;
    input wire [7:0] din  ;
@@ -15,18 +13,14 @@ module ram(
    output wire [15:0] dout;
    
    reg [15:0] mem [255:0] ;
-
-   always @(posedge clk or negedge clr)
+   
+   always @(posedge clk)
      begin
-	if(clr == 1'b0)
+	if(rw == 1'b1)
 	  begin
+	     mem[adrs] <= {8'b00000000,din};
 	  end
-	else
-	  if(rw == 1'b1)
-	    begin
-	       mem[adrs] <= {8'b00000000,din};
-	    end
-     end // always @ (posedge clk or negedge clr)
+     end
    
    assign dout = mem[adrs] ;
    

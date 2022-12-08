@@ -1,3 +1,11 @@
+`include "acc.v"
+`include "ir.v"	
+`include "pc.v"	
+`include "mux_a.v"	
+`include "mux_b.v"	
+`include "mux_c.v"	
+`include ""	
+`include ""	
 module toplevel(
 		din,
 		clk,
@@ -103,4 +111,3 @@ module toplevel(
 		  );
    
 endmodule
-   
