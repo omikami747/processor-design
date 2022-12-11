@@ -23,12 +23,12 @@ module ir(
    
    always @(posedge clk or negedge clr)
      begin
-	if(clr === 1'b0)
+	if(clr == 1'b0)
 	  begin
 	     d_out <= 'h0;
 	  end
 	else
-	  if(en_ir === 1'b1)
+	  if(en_ir == 1'b1)
 	    begin
 	       d_out <= d_in;
 	    end

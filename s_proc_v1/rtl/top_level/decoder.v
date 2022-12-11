@@ -36,62 +36,83 @@ module decoder(
    localparam INCREMENT      =  4'b0001;
    localparam LOAD           =  4'b0000;
    localparam ADD            =  4'b0100;
-   localparam BITAND            =  4'b0001;
+   localparam BITAND         =  4'b0001;
    localparam SUB            =  4'b0110;
    localparam INPUT          =  4'b1010;
    localparam OUTPUT         =  4'b1110;
    localparam JUMP           =  4'b1000;
    localparam JUMP_CONDITION =  4'b1001;
-   localparam ZERO           =  2'b00  ;
-   localparam CARRY          =  2'b10  ;
-   localparam NO_ZERO        =  2'b01  ;
-   localparam NO_CARRY       =  2'b11  ;
+
+   localparam ZERO           =  2'b00;
+   localparam CARRY          =  2'b10;
+   localparam NO_ZERO        =  2'b01;
+   localparam NO_CARRY       =  2'b11;
    
-   //////////////////////////////////////////////////////////////////////
+   //----------------------------------------------------------------------
    //   Sequence Generator 
    //   Brief description :
    //   'f' indicates the fetch state , 'd' indicates the decode state 
    //   ,'e' indicates the execute state and 'i' indicates the increment state
    //
-   //////////////////////////////////////////////////////////////////////
-   
+   //----------------------------------------------------------------------
    wire 	     f;
    wire 	     d;
    wire 	     e;
    wire 	     i;
    
    reg [3:0] 	     state;
+
+   // synthesis translate_off
+   reg 		     error;
+   
    always @(posedge clk or negedge clr)
      begin
-	
-	if(clr == 1'b0)
+	if (state == IDLE)
+	  if (xx == 1'b1)
+	    begin
+	       $display("Detected error of some sort, terminating simulation");
+	       error <= 1'b1;
+	       sim_env.error_flag <= 4'd4;
+	       $finish;
+	    end
+     end
+   // synthesis translate_on
+   
+   always @(posedge clk or negedge clr)
+     begin
+	if (clr == 1'b0)
 	  begin
 	     state <= IDLE;
-	     
 	  end
+
 	else
 	  begin
-	     case(state)
+	     case (state) // synthesis full_case parallel_case
 	       IDLE:
 		 begin
 		    state <= FETCH;
 		 end
+
 	       FETCH:
 		 begin
 		    state <= DECODE;
 		 end
+
 	       DECODE:
 		 begin
 		    state <= EXECUTE;
 		 end
+
 	       EXECUTE:
 		 begin
 		    state <= INCREMENT;
 		 end
+
 	       INCREMENT:
 		 begin
 		    state <= FETCH;
 		 end
+
 	       default:	// 
 		 begin
 		    state <= IDLE;
@@ -100,6 +121,9 @@ module decoder(
 	     
 	  end
      end // always @ (posedge clk or negedge clr)
+
+ //  assign {f, e, d, i} = state;
+   
    assign f = state[3];
    assign d = state[2];
    assign e = state[1];
@@ -121,7 +145,7 @@ module decoder(
 	  end
 	else
 	  begin
-	     if(add | sub | bitand == 1'b1)
+	     if (add || sub || bitand)
 	       begin
 		  carry_reg <= carry;
 	       end
@@ -138,13 +162,13 @@ module decoder(
    
    always @(posedge clk or negedge clr)
      begin
-	if(clr == 1'b0)
+	if (clr == 1'b0)
 	  begin
 	     zero_reg <= 1'b0;
 	  end
 	else
 	  begin
-	     if(add | sub | bitand == 1'b1)
+	     if (add || sub || bitand)
 	       begin
 		  zero_reg <= zero;
 	       end
@@ -190,168 +214,38 @@ module decoder(
 	  end
      end
    
-   
    always @ (*)
      begin
-	case (ir[7:4])
-	  LOAD :
-	    begin
-	       load <= decexe;
-	       inp <= 1'b0;
-	       outp <= 1'b0;
-	       sub <= 1'b0;
-	       add <= 1'b0;
-	       bitand <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  ADD :
-	    begin
-	       add <=  decexe;
-	       inp <= 1'b0;
-	       outp <= 1'b0;
-	       sub <= 1'b0;
-	       load <= 1'b0;
-	       bitand <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  BITAND :
-	    begin
-	       bitand <= decexe;
-	       inp <= 1'b0;
-	       outp <= 1'b0;
-	       sub <= 1'b0;
-	       load <= 1'b0;
-	       add <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  SUB :
-	    begin
-	       sub <= decexe;
-	       inp <= 1'b0;
-	       outp <= 1'b0;
-	       add <= 1'b0;
-	       load <= 1'b0;
-	       bitand <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  INPUT :
-	    begin
-	       inp <=  decexe;
-	       add <= 1'b0;
-	       outp <= 1'b0;
-	       sub <= 1'b0;
-	       load <= 1'b0;
-	       bitand <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  OUTPUT :
-	    begin
-	       outp <=  decexe;
-	       inp <= 1'b0;
-	       add <= 1'b0;
-	       sub <= 1'b0;
-	       load <= 1'b0;
-	       bitand <= 1'b0;
-	       jump <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0;
-	    end
-	  JUMP :
-	    begin
-	       jump <= decexe;   
-	       inp <= 1'b0;
-	       outp <= 1'b0;
-	       sub <= 1'b0;
-	       load <= 1'b0;
-	       bitand <= 1'b0;
-	       add <= 1'b0;
-	       jumpz <= 1'b0;
-	       jumpnz <= 1'b0;
-	       jumpc <= 1'b0;
-	       jumpnc <= 1'b0; 
-	    end
+	load    <= 1'b0;
+	inp     <= 1'b0;
+	outp    <= 1'b0;
+	sub     <= 1'b0;
+	add <= 1'b0;
+	bitand <= 1'b0;
+	jump <= 1'b0;
+	jumpz <= 1'b0;
+	jumpnz <= 1'b0;
+	jumpc <= 1'b0;
+	jumpnc <= 1'b0;
+	
+	case (ir[7:4]) // synthesis full_case parallel_case
+	  LOAD    : load    <= decexe;
+	  ADD     : add     <= decexe;
+	  BITAND  : bitand  <= decexe;
+	  SUB     : sub     <= decexe;
+	  INPUT   : inp     <= decexe;
+	  OUTPUT  : outp    <= decexe;
+	  JUMP    : jump    <= decexe;   
+
 	  JUMP_CONDITION :
 	    begin
 	       case (ir[3:2])
-		 ZERO :
-		   begin
-		      jumpz <= decexe;
-		      inp <= 1'b0;
-		      outp <= 1'b0;
-		      sub <= 1'b0;
-		      load <= 1'b0;
-		      bitand <= 1'b0;
-		      jump <= 1'b0;
-		      add  <= 1'b0;
-		      jumpnz <= 1'b0;
-		      jumpc <= 1'b0;
-		      jumpnc <= 1'b0;
-		   end
-		 CARRY :
-		   begin
-		      jumpc <= decexe;
-		      inp <= 1'b0;
-		      outp <= 1'b0;
-		      sub <= 1'b0;
-		      load <= 1'b0;
-		      bitand <= 1'b0;
-		      jump <= 1'b0;
-		      jumpz <= 1'b0;
-		      jumpnz <= 1'b0;
-		      add <= 1'b0;
-		      jumpnc <= 1'b0;
-		   end
-		 NO_ZERO :
-		   begin
-		      jumpnz <=  decexe;
-		      inp <= 1'b0;
-		      outp <= 1'b0;
-		      sub <= 1'b0;
-		      load <= 1'b0;
-		      bitand <= 1'b0;
-		      jump <= 1'b0;
-		      jumpz <= 1'b0;
-		      add <= 1'b0;
-		      jumpc <= 1'b0;
-		      jumpnc <= 1'b0;
-		   end
-		 NO_CARRY:
-		   begin
-		      jumpnc <= decexe;
-		      inp <= 1'b0;
-		      outp <= 1'b0;
-		      sub <= 1'b0;
-		      load <= 1'b0;
-		      bitand <= 1'b0;
-		      jump <= 1'b0;
-		      jumpz <= 1'b0;
-		      jumpnz <= 1'b0;
-		      jumpc <= 1'b0;
-		      add <= 1'b0;
-		   end	  
-		 default :
+		 ZERO      : jumpz   <= decexe;
+		 CARRY     : jumpc   <= decexe;
+		 NO_ZERO   : jumpnz  <= decexe;
+		 NO_CARRY  : jumpnc  <= decexe;
+
+		 default   : 
 		   begin
 		      jumpnc <= 1'b0;
 		      inp <= 1'b0;
@@ -366,7 +260,23 @@ module decoder(
 		      add <= 1'b0;
 		   end // case: default
 	       endcase // case (ir[3:2])
-	    end
+	    end // case: JUMP_CONDITION
+
+	  default   : 
+	    begin
+	       jumpnc <= 1'b0;
+	       inp <= 1'b0;
+	       outp <= 1'b0;
+	       sub <= 1'b0;
+	       load <= 1'b0;
+	       bitand <= 1'b0;
+	       jump <= 1'b0;
+	       jumpz <= 1'b0;
+	       jumpnz <= 1'b0;
+	       jumpc <= 1'b0;
+	       add <= 1'b0;
+	    end // case: default
+	  
 	endcase // case (ir[7:2])
      end // always @ (*)
 

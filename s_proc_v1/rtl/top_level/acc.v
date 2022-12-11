@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------------
+// File:        acc.v
+// Author:      Omkar Kamath
+// Date:        11 Dec 2022
+//
+// Description: Accumulator for the Simple CPU
+//
+// (C) Omkar Kamath, 2022. No part may be reproduced without permission from
+//     author.
+//------------------------------------------------------------------------------
+
 module acc
   (clk,
    clr,
@@ -13,7 +24,9 @@ module acc
    
    output  reg [7:0] 	acc_out;
    
-   
+   //----------------------------------------------------------------------
+   // Main accumulator process
+   //----------------------------------------------------------------------
    always @(posedge clk or negedge clr)
      begin
 	if (clr  == 1'b0)
