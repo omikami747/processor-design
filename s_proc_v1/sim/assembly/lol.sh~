@@ -1,0 +1,18 @@
+#!/bin/bash
+rm machinecode.txt
+
+rm a.out
+
+touch machinecode.txt
+
+gawk '{if(($1 == "LOAD") && ($2 == "ACC")){print ("00000000"$3" ")> "machinecode.txt";
+     	      	     	    	   		 }
+						 else if(($1 == "ADD") && ($2 == "ACC")){print ("01000000"$3" ")> "machinecode.txt";
+     	      	     	    	   		 }}' assembly.txt
+
+iverilog -o /home/kali/PRACTICE/sim/a.out /home/kali/PRACTICE/sim/sim_env.v
+
+#vvp /home/kali/PRACTICE/sim/a.out
+
+#gtkwave /home/kali/PRACTICE/sim/dump.vcd
+

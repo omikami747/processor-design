@@ -1,11 +1,13 @@
-`include "top_level/acc.v"
-`include "top_level/ir.v"	
-`include "top_level/pc.v"	
-`include "top_level/mux_a.v"	
-`include "top_level/mux_b.v"	
-`include "top_level/mux_c.v"	
-`include "top_level/decoder.v"
-`include "top_level/alu.v"
+//------------------------------------------------------------------------------
+// File:        toplevel.v
+// Author:      Omkar Kamath
+// Date:        11 Dec 2022
+//
+// Description: Top level Module for the Simple CPU v1
+//
+// (C) Omkar Kamath, 2022. No part may be reproduced without permission from
+//     author.
+//------------------------------------------------------------------------------
 
 module toplevel(
 		din,
@@ -111,5 +113,5 @@ module toplevel(
 		  .c(adrs)
 		  );
    
-endmodule
+endmodule   
    

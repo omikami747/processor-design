@@ -1,5 +1,5 @@
-`include "top_level/toplevel.v"
-`include "top_level/ram.v"
+`include "/home/kali/PRACTICE/sim/top_level/toplevel.v"
+`include "/home/kali/PRACTICE/sim/top_level/ram.v"
 module sim_env;
    reg tstclk;
    reg tstclr;
@@ -27,7 +27,7 @@ module sim_env;
 		     );
    ram dut_ram (
 		.clk(tstclk),
-		.rw(tstrw),
+		.rw(toprw),
 		.adrs(topadrs),
 		.dout(topdin),
 		.din(topdout)

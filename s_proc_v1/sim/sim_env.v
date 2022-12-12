@@ -1,5 +1,3 @@
-`include "top_level/toplevel.v"
-`include "top_level/ram.v"
 module sim_env;
    reg tstclk;
    reg tstclr;

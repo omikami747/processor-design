@@ -1,0 +1,13 @@
+./sim_env.v
+./top_level/acc.v
+./top_level/alu.v
+./top_level/decoder.v
+./top_level/ir.v
+./top_level/mem_ctrl.v
+./top_level/mux_a.v
+./top_level/mux_b.v
+./top_level/mux_c.v
+./top_level/pc.v
+./top_level/ram.v
+./top_level/toplevel.v
+
