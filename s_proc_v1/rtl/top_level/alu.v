@@ -1,21 +1,33 @@
-module alu(
-	   a,
-	   b,
-	   alu,
-	   dout,
-	   carry,
-	   zero
-	   );
-   
-   input wire [7:0] a;
-   input wire [7:0] b;
-   input wire [4:0] alu;
-   
-   output wire [7:0] dout;
-   output wire 	     carry;
-   output reg       zero ;
-   reg [8:0] 	    temp_dout;
+//------------------------------------------------------------------------------
+// File:        alu.v
+// Author:      Omkar Kamath
+// Date:        11 Dec 2022
+//
+// Description: ALU for the Simple CPU
+//
+// (C) Omkar Kamath, 2022. No part may be reproduced without permission from
+//     author.
+//------------------------------------------------------------------------------
 
+module alu
+  (
+   a,
+   b,
+   alu,
+   dout,
+   carry,
+   zero
+   );
+   
+   input wire [7:0] a          ;
+   input wire [7:0] b          ;
+   input wire [4:0] alu        ;
+   
+   output wire [7:0] dout      ;
+   output wire 	     carry     ;
+   output reg 	     zero      ;
+   reg [8:0] 	     temp_dout ;
+   
    localparam ADD        = 5'b00000 ;
    localparam BITAND     = 5'b00001 ;
    localparam INP_A      = 5'b00010 ;
@@ -26,30 +38,12 @@ module alu(
    always @(*)
      begin
 	case (alu)
-	  ADD :
-	    begin
-	       temp_dout <= (a + b);
-	    end
-	  BITAND :
-	    begin
-	       temp_dout <= (a & b);
-	    end
-	  INP_A :
-	    begin
-	       temp_dout <= (a);
-	    end
-	  INP_B :
-	    begin
-	       temp_dout <= (b);
-	    end
-	  SUB :
-	    begin
-	       temp_dout <= (a-b);
-	    end
-	  INCREMENT :
-	    begin
-	       temp_dout <= (a + 1);
-	    end
+	  ADD       :   temp_dout <= (a + b);
+	  BITAND    :   temp_dout <= (a & b);
+	  INP_A     :   temp_dout <= (a)    ;
+	  INP_B     :   temp_dout <= (b)    ;
+	  SUB       :   temp_dout <= (a-b)  ;
+	  INCREMENT :   temp_dout <= (a + 1);
 	endcase // case (alu)
      end // always @ (*)
 
@@ -68,5 +62,4 @@ module alu(
 	  end
      end
 
-endmodule
-	       
+endmodule	       
